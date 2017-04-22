@@ -26,8 +26,8 @@ class DBConfig{
             'user' => 'root',
             'password' => '',
             'database' => 'test'
-        ]);<br>
-    }<br>
+        ]);
+    }
 }
 ```
 
