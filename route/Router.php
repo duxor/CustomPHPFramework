@@ -22,7 +22,7 @@ class Router {
      */
     public function __construct($route = null)
     {
-        $this->setRoute($route ? $route : substr($_SERVER['PHP_SELF'], strlen($this->root) + 1));
+        $this->setRoute($route ? $route : trim($_SERVER['REQUEST_URI'], '/'));
         $this->getTarget();
     }
 
