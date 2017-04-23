@@ -21,7 +21,7 @@ class Router {
      * RouteController constructor.
      */
     public function __construct($route = null)
-    {
+    {echo substr($_SERVER['PHP_SELF'], strlen($this->root) + 1);
         $this->setRoute($route ? $route : substr($_SERVER['PHP_SELF'], strlen($this->root) + 1));
         $this->getTarget();
     }
@@ -38,7 +38,7 @@ class Router {
      */
     private function getTarget()
     {
-        $this->isIndex();
+        $this->isIndex();echo $this->route;
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             $controller = $this->getController();
