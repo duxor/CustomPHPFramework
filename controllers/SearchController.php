@@ -8,13 +8,14 @@ class SearchController extends User{
     /**
      * SearchController constructor.
      */
-    public function __construct(){
-
+    public function __construct($search = null)
+    {
+        $search = $search ? $search : isset($_POST['search']) ? $_POST['search'] : "";
+        $this->message = [];
         if ($this::isLogged())
         {
             $user = new User();
-            $this->message = [];
-            $_SESSION["result"] = $user->search($_POST['search']);
+            $_SESSION["result"] = $user->search($search);
             $this->redirectUrl = "/search";
         }
         else

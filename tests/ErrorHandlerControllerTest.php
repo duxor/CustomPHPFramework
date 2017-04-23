@@ -25,4 +25,6 @@ class ErrorHandlerControllerTest extends TestCase {
         $_SESSION['errors'] = null;
         $this->assertFalse(ErrorHandlerController::get());
     }
+
+    //ToDo: Add tests for error timelife.
 }

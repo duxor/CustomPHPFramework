@@ -13,6 +13,7 @@ class ErrorHandlerController{
         {
             foreach($_SESSION['errors'] as $i => $error)
             {
+                //ToDo: Remove HTML from method..
                 echo "<div class='alert alert-danger'>";
                 foreach($error as $key => $val)
                 {
@@ -24,4 +25,6 @@ class ErrorHandlerController{
         }
         return false;
     }
+
+    //ToDo: Add timelife for errors.
 }
