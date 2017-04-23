@@ -5,4 +5,4 @@ services:
   - mysql
 before_script:
   - mysql -u root -e 'CREATE DATABASE test;'
-  - mysql -u root -e "USER test; CREATE TABLE user (id` int(11) primary key auto_increment not null, name varchar(45) DEFAULT NULL, email varchar(45) NOT NULL, password varchar(250) NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=latin1;"
+  - mysql -u root -e 'USER test; CREATE TABLE user (id int(11) primary key auto_increment not null, name varchar(45) DEFAULT NULL, email varchar(45) NOT NULL, password varchar(250) NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=latin1;'
