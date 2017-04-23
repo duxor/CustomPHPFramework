@@ -1,3 +1,18 @@
 machine:
   php:
     version: 7.0.17
+  services:
+    - mysql
+  hosts:
+      athliit.app: 127.0.0.1
+  environment:
+      APP_ENV: testing
+      APP_URL: 127.0.0.1
+      DB_HOST: 127.0.0.1
+      DB_URL: 127.0.0.1
+      DB_NAME: circle_test
+      DB_USER: ubuntu
+  database:
+    override:
+      - mysql -u ubuntu -e "create database test"
+      - mysql -u ubuntu -e "use test; CREATE TABLE user (id int(11) primary key auto_increment not null, name varchar(45) DEFAULT NULL, email varchar(45) NOT NULL, password varchar(250) NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=latin1;"
