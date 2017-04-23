@@ -1,6 +1,14 @@
 language: php
 php:
   - '7.0'
-  - '7.1'
-  - hhvm
-  - nightly
+services:
+  - mysql
+addons:
+  apt:
+    packages:
+    - mysql-server-5.6
+    - mysql-client-core-5.6
+    - mysql-client-5.6
+before_script:
+  - mysql -u root -e 'CREATE DATABASE test;'
+  - mysql -u root -e "USER test; CREATE TABLE user (id` int(11) primary key auto_increment not null, name varchar(45) DEFAULT NULL, email varchar(45) NOT NULL, password varchar(250) NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=latin1;"
