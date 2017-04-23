@@ -20,11 +20,31 @@ class Router {
     /**
      * RouteController constructor.
      */
-    public function __construct(){
-        $this->route = substr($_SERVER['PHP_SELF'], strlen($this->root)+1);
+    public function __construct($route = null)
+    {
+        $this->setRoute($route ? $route : substr($_SERVER['PHP_SELF'], strlen($this->root) + 1));
+        $this->getTarget();
+    }
+
+    /**
+     * @param string $route
+     */
+    public function setRoute( string $route ){
+        $this->route = $route;
+    }
+
+    /**
+     * @author Dusan Perisic
+     */
+    private function getTarget()
+    {
         $this->isIndex();
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
-            $this->getController();
+        {
+            $controller = $this->getController();
+            $_SERVER['REQUEST_METHOD'] = "GET";
+            $this->redirect($controller->getRedirectUrl());
+        }
         else
             $this->getView();
     }
@@ -32,8 +52,9 @@ class Router {
     /**
      *
      */
-    private function isIndex(){
-        if ($this->route == "" || $this->route == "index")
+    private function isIndex()
+    {
+        if ($this->route == "" || $this->route == "/" || $this->route == "index")
         {
             $this->route = "home";
             $_SESSION['errors'] = [];
@@ -41,13 +62,38 @@ class Router {
     }
 
     /**
+     * @return bool
+     * @author Dusan Perisic
+     */
+    private function isLogged()
+    {
+        if (substr($this->route, strlen($this->route) - 5) == "login")
+        {
+            if (User::isLogged())
+            {
+                $this->route = "/home";
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @return string
+     * @author Dusan Perisic
+     */
+    private function renderRouteName()
+    {
+        return $this->route[0] == "/" || $this->route[0] == "\\" ? substr($this->route, 1) : $this->route;
+    }
+    /**
      *
      */
     private function getController()
     {
-        $controller = ucfirst($this->route) . "Controller";
+        $controller = ucfirst($this->renderRouteName()) . "Controller";
         require_once "controllers/" . $controller . ".php";
-        new $controller();
+        return new $controller();
     }
 
     /**
@@ -55,6 +101,7 @@ class Router {
      */
     private function getView()
     {
+        $this->isLogged();
         $target = "views/{$this->route}.php";
         if (file_exists($target)){
             require_once $target;
@@ -70,6 +117,7 @@ class Router {
      */
     public static function redirect($route)
     {
-        header("Location: {$route}");
+        $router = new Router($route);
+        $router->getTarget();
     }
 }

@@ -8,8 +8,7 @@
  */
 
 use PHPUnit\Framework\TestCase;
-require_once "TestLoginClass.php";
-require_once "RegisterControllerTest.php";
+require_once "controllers/LoginController.php";
 
 /**
  * Class LoginControllerTest
@@ -22,8 +21,8 @@ class LoginControllerTest extends TestCase {
      */
     public function testEmailIsNotRegistrated()
     {
-        $login = new TestLoginClass("errormail@error.mail", "errormail@error.mail");
-        $this->assertEquals("/login", $login->redirect());
+        $login = new LoginController("errormail@error.mail", "errormail@error.mail");
+        $this->assertEquals("/login", $login->getRedirectUrl());
 
         $user = isset($_SESSION["user"]) ? $_SESSION["user"] : null;
         $this->assertNull($user);
@@ -37,8 +36,8 @@ class LoginControllerTest extends TestCase {
      */
     public function testErrorEmailFormat()
     {
-        $login = new TestLoginClass("errormail", "errormail@error.mail");
-        $this->assertEquals("/login", $login->redirect());
+        $login = new LoginController("errormail", "errormail@error.mail");
+        $this->assertEquals("/login", $login->getRedirectUrl());
 
         $user = isset($_SESSION["user"]) ? $_SESSION["user"] : null;
         $this->assertNull($user);
@@ -52,8 +51,8 @@ class LoginControllerTest extends TestCase {
      */
     public function testErrorPasswordLength()
     {
-        $login = new TestLoginClass("errormail@error.mail", "12");
-        $this->assertEquals("/login", $login->redirect());
+        $login = new LoginController("errormail@error.mail", "12");
+        $this->assertEquals("/login", $login->getRedirectUrl());
 
         $user = isset($_SESSION["user"]) ? $_SESSION["user"] : null;
         $this->assertNull($user);

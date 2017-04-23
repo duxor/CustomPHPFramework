@@ -32,8 +32,6 @@ class RegisterController extends User{
             $this->redirectUrl = "/register";
         }
         $this->setMessage();
-
-        return $this->redirect();
     }
 
     /**

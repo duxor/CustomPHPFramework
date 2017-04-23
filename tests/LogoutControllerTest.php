@@ -8,12 +8,11 @@
  */
 use PHPUnit\Framework\TestCase;
 require_once "controllers/LogoutController.php";
-require_once "TestLogoutClass.php";
 
 class LogoutControllerTest extends TestCase {
-    public function testGet()
+    public function testLogout()
     {
-        $logout = new TestLogoutClass();
+        $logout = new LogoutController();
         $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
         $this->assertNull($user);
     }

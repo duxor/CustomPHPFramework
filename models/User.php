@@ -103,11 +103,12 @@ class User extends DB {
     }
 
     /**
+     * @return string
      * @author Dusan Perisic
      */
-    protected function redirect()
+    public function getRedirectUrl() : string
     {
-        return Router::redirect($this->redirectUrl);
+        return $this->redirectUrl;
     }
 
     /**

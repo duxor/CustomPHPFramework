@@ -7,6 +7,7 @@ $classes = [
     'route/Router.php',
     'models/DB.php',
     'models/User.php',
+    'controllers/Controller.php',
     'controllers/ErrorHandlerController.php',
 ];
 

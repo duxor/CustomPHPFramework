@@ -7,15 +7,15 @@
  * Time: 22:59
  */
 use PHPUnit\Framework\TestCase;
-require_once "LoginControllerTest.php";
-require_once "TestRegisterClass.php";
+require_once "controllers/LoginController.php";
+require_once "controllers/RegisterController.php";
 
 class RegisterControllerTest extends TestCase {
     public function testIsRegistered($email = null, $password = null)
     {
         $email = $email ? $email : "admin@admin.com";
         $password = $password ? $password : "admin@admin.com";
-        $login = new TestLoginClass($email, $password);
+        $login = new LoginController($email, $password);
         $user = isset($_SESSION["user"]) ? $_SESSION["user"] : null;
 
         $errors = isset($_SESSION["errors"]) ? $_SESSION["errors"] : null;
@@ -44,8 +44,8 @@ class RegisterControllerTest extends TestCase {
         }
         else
         {
-            $register = new TestRegisterClass("admin@admin.com", "Administrator", "admin@admin.com", "admin@admin.com");
-            $this->assertEquals("/login", $register->redirect());
+            $register = new RegisterController("admin@admin.com", "Administrator", "admin@admin.com", "admin@admin.com");
+            $this->assertEquals("/login", $register->getRedirectUrl());
         }
 
         return true;
@@ -55,8 +55,8 @@ class RegisterControllerTest extends TestCase {
      */
     public function testRegistratedUser()
     {
-        $login = new TestLoginClass("admin@admin.com", "admin@admin.com");
-        $this->assertEquals("/home", $login->redirect());
+        $login = new LoginController("admin@admin.com", "admin@admin.com");
+        $this->assertEquals("/home", $login->getRedirectUrl());
 
         $user = isset($_SESSION["user"]) ? $_SESSION["user"] : null;
         $this->assertNotNull($user);

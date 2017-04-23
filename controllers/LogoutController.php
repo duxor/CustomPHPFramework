@@ -11,7 +11,5 @@ class LogoutController extends User{
         $_SESSION['user'] = null;
         $_SESSION["errors"] = null;
         $this->redirectUrl = "/";
-
-        return $this->redirect();
     }
 }

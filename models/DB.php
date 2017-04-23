@@ -3,7 +3,7 @@
 /**
  * Class DB
  */
-class DB {
+abstract class DB {
     /**
      * @var
      */
@@ -181,7 +181,7 @@ class DB {
     protected function exists()
     {
         $results = $this->get();
-        if (mysqli_num_rows($results))
+        if ($results ? mysqli_num_rows($results) : false)
             return true;
         else
             return false;

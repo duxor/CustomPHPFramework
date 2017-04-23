@@ -3,25 +3,25 @@
 /**
  * Class SearchController
  */
-class SearchController extends DB{
+
+class SearchController extends User{
     /**
      * SearchController constructor.
      */
     public function __construct(){
 
-        if (User::isLogged())
+        if ($this::isLogged())
         {
             $user = new User();
-            $_SESSION["errors"] = null;
+            $this->message = [];
             $_SESSION["result"] = $user->search($_POST['search']);
-            Router::redirect('/search');
+            $this->redirectUrl = "/search";
         }
         else
         {
-            $_SESSION["errors"] = [
-                ["login" => "Please login"]
-            ];
-            Router::redirect('/login');
+            array_push($this->message, ["login" => "Please login"]);
+            $this->redirectUrl = "/login";
         }
+        $this->setMessage();
     }
 }

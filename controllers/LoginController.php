@@ -26,8 +26,6 @@ class LoginController extends User{
             $this->redirectUrl = "/login";
         }
         $this->setMessage();
-
-        return $this->redirect();
     }
 
     /**
@@ -37,7 +35,7 @@ class LoginController extends User{
     private function autenticate()
     {
         $user = $this->newQuery()->where("email", "=", $this->email)->get();
-        $user = mysqli_fetch_assoc($user);
+        $user = $user ? mysqli_fetch_assoc($user) : null;
 
         if (count($user) > 1)
         {
